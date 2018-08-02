@@ -12,3 +12,12 @@ index.html
 site
 package_bash.md
 ./*.json
+src/App.vue
+src/main.js
+.babelrc
+.editorconfig
+.eslintignore
+.eslintrc
+.npminstall
+.postcssrc
+static

@@ -1,9 +1,14 @@
 {
   "name": "eas-table",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "table for Vue",
   "author": "vito<vito.zhang@gmail.com>",
+  "main": "dist/eas-table.js",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vitozyf/eas-table"
+  },
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
@@ -11,10 +16,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "vue": "^2.5.2",
-    "throttle-debounce": "^1.0.1",
+    "eas-table": "^1.0.0",
     "normalize-wheel": "^1.0.1",
-    "resize-observer-polyfill": "^1.5.0"
+    "resize-observer-polyfill": "^1.5.0",
+    "throttle-debounce": "^1.0.1",
+    "vue": "^2.5.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
