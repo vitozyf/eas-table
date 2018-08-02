@@ -1,0 +1,11 @@
+/build/
+/config/
+/dist/
+/*.js
+/src/utils/
+/src/utils/popup/
+/src/mixins/
+/src/locale/
+/src/directives/
+/src/components/
+
