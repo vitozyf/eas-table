@@ -1,6 +1,6 @@
 import { hasClass, addClass, removeClass } from '~utils/dom';
-import ElCheckbox from '~components/checkbox';
-import ElTag from '~components/tag';
+import EasCheckbox from '~components/checkbox';
+import EasTag from '~components/tag';
 import Vue from 'vue';
 import FilterPanel from './filter-panel.vue';
 import LayoutObserver from './layout-observer';
@@ -76,7 +76,7 @@ export default {
     if (isGroup) this.$parent.isGroup = true;
     return (
       <table
-        class="el-table__header"
+        class="eas-table__header"
         cellspacing="0"
         cellpadding="0"
         border="0">
@@ -125,7 +125,7 @@ export default {
                         }
                         {
                           column.filterable
-                            ? <span class="el-table__column-filter-trigger" on-click={ ($event) => this.handleFilterClick($event, column) }><i class={ ['el-icon-arrow-down', column.filterOpened ? 'el-icon-arrow-up' : ''] }></i></span>
+                            ? <span class="eas-table__column-filter-trigger" on-click={ ($event) => this.handleFilterClick($event, column) }><i class={ ['eas-icon-arrow-down', column.filterOpened ? 'eas-icon-arrow-up' : ''] }></i></span>
                             : ''
                         }
                       </div>
@@ -161,8 +161,8 @@ export default {
   },
 
   components: {
-    ElCheckbox,
-    ElTag
+    EasCheckbox,
+    EasTag
   },
 
   computed: {
@@ -309,7 +309,7 @@ export default {
       event.stopPropagation();
       const target = event.target;
       let cell = target.tagName === 'TH' ? target : target.parentNode;
-      cell = cell.querySelector('.el-table__column-filter-trigger') || cell;
+      cell = cell.querySelector('.eas-table__column-filter-trigger') || cell;
       const table = this.$parent;
 
       let filterPanel = this.filterPanels[column.id];

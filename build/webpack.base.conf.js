@@ -21,19 +21,13 @@ const createLintingRule = () => ({
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  // output: {
-  //   // path: config.build.assetsRoot,
-  //   // filename: 'app.js'
-  //   // publicPath: process.env.NODE_ENV === 'production'
-  //   //   ? config.build.assetsPublicPath
-  //   //   : config.dev.assetsPublicPath
-  // },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
       '~': resolve('src'),
+      '~test': resolve('test'),
       '~assets': resolve('src/assets'),
       '~components': resolve('src/components'),
       '~directives': resolve('src/directives'),

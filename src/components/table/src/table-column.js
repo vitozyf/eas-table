@@ -1,5 +1,5 @@
-import ElCheckbox from '~components/checkbox';
-import ElTag from '~components/tag';
+import EasCheckbox from '~components/checkbox';
+import EasTag from '~components/tag';
 import objectAssign from '~utils/merge';
 import { getPropByPath } from '~utils/util';
 
@@ -14,7 +14,7 @@ const defaults = {
     minWidth: 48,
     realWidth: 48,
     order: '',
-    className: 'el-table-column--selection'
+    className: 'eas-table-column--selection'
   },
   expand: {
     width: 48,
@@ -33,14 +33,14 @@ const defaults = {
 const forced = {
   selection: {
     renderHeader: function(h, { store }) {
-      return <el-checkbox
+      return <eas-checkbox
         disabled={ store.states.data && store.states.data.length === 0 }
         indeterminate={ store.states.selection.length > 0 && !this.isAllSelected }
         nativeOn-click={ this.toggleAllSelection }
         value={ this.isAllSelected } />;
     },
     renderCell: function(h, { row, column, store, $index }) {
-      return <el-checkbox
+      return <eas-checkbox
         nativeOn-click={ (event) => event.stopPropagation() }
         value={ store.isSelected(row) }
         disabled={ column.selectable ? !column.selectable.call(null, row, $index) : false }
@@ -73,14 +73,14 @@ const forced = {
     },
     renderCell: function(h, { row, store }, proxy) {
       const expanded = store.states.expandRows.indexOf(row) > -1;
-      return <div class={ 'el-table__expand-icon ' + (expanded ? 'el-table__expand-icon--expanded' : '') }
+      return <div class={ 'eas-table__expand-icon ' + (expanded ? 'eas-table__expand-icon--expanded' : '') }
         on-click={ e => proxy.handleExpandClick(row, e) }>
-        <i class='el-icon el-icon-arrow-right'></i>
+        <i class='eas-icon eas-icon-arrow-right'></i>
       </div>;
     },
     sortable: false,
     resizable: false,
-    className: 'el-table__expand-column'
+    className: 'eas-table__expand-column'
   }
 };
 
@@ -206,8 +206,8 @@ export default {
   },
 
   components: {
-    ElCheckbox,
-    ElTag
+    EasCheckbox,
+    EasTag
   },
 
   computed: {
@@ -320,7 +320,7 @@ export default {
       }
 
       return _self.showOverflowTooltip || _self.showTooltipWhenOverflow
-        ? <div class="cell el-tooltip" style={ {width: (data.column.realWidth || data.column.width) - 1 + 'px'} }>{ renderCell(h, data) }</div>
+        ? <div class="cell eas-tooltip" style={ {width: (data.column.realWidth || data.column.width) - 1 + 'px'} }>{ renderCell(h, data) }</div>
         : <div class="cell">{ renderCell(h, data) }</div>;
     };
   },

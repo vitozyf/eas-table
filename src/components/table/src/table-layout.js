@@ -44,7 +44,7 @@ class TableLayout {
     if (typeof height !== 'string' && typeof height !== 'number') return;
     const bodyWrapper = this.table.bodyWrapper;
     if (this.table.$el && bodyWrapper) {
-      const body = bodyWrapper.querySelector('.el-table__body');
+      const body = bodyWrapper.querySelector('.eas-table__body');
       this.scrollY = body.offsetHeight > this.bodyHeight;
     }
   }
@@ -91,6 +91,8 @@ class TableLayout {
     this.fixedBodyHeight = this.scrollX ? this.bodyHeight - this.gutterWidth : this.bodyHeight;
 
     const noData = !this.table.data || this.table.data.length === 0;
+    // console.log(this.table.$el)
+    // debugger
     this.viewportHeight = this.scrollX ? tableHeight - (noData ? 0 : this.gutterWidth) : tableHeight;
 
     this.updateScrollY();

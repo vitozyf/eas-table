@@ -2,9 +2,9 @@
   import Emitter from '~mixins/emitter';
 
   export default {
-    name: 'ElCheckboxGroup',
+    name: 'EasCheckboxGroup',
 
-    componentName: 'ElCheckboxGroup',
+    componentName: 'EasCheckboxGroup',
 
     mixins: [Emitter],
 
@@ -42,7 +42,7 @@
 </script>
 
 <template>
-  <div class="el-checkbox-group" role="group" aria-label="checkbox-group">
+  <div class="eas-checkbox-group" role="group" aria-label="checkbox-group">
     <slot></slot>
   </div>
 </template>

@@ -16,13 +16,13 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "eas-table": "^1.0.0",
     "normalize-wheel": "^1.0.1",
     "resize-observer-polyfill": "^1.5.0",
     "throttle-debounce": "^1.0.1",
     "vue": "^2.5.2"
   },
   "devDependencies": {
+    "eas-table": "^1.0.1",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",

@@ -197,7 +197,7 @@ TableStore.prototype.mutations = {
     if ($el && highlightCurrentRow) {
       const data = states.data;
       const tr = $el.querySelector('tbody').children;
-      const rows = [].filter.call(tr, row => hasClass(row, 'el-table__row'));
+      const rows = [].filter.call(tr, row => hasClass(row, 'eas-table__row'));
       const row = rows[data.indexOf(states.currentRow)];
 
       [].forEach.call(rows, row => removeClass(row, 'current-row'));

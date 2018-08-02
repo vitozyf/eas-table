@@ -1,7 +1,7 @@
 import LayoutObserver from './layout-observer';
 
 export default {
-  name: 'ElTableFooter',
+  name: 'EasTableFooter',
 
   mixins: [LayoutObserver],
 
@@ -43,7 +43,7 @@ export default {
 
     return (
       <table
-        class="el-table__footer"
+        class="eas-table__footer"
         cellspacing="0"
         cellpadding="0"
         border="0">

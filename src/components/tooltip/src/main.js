@@ -6,7 +6,7 @@ import { generateId } from '~utils/util';
 import Vue from 'vue';
 
 export default {
-  name: 'ElTooltip',
+  name: 'EasTooltip',
 
   mixins: [Popper],
 
@@ -32,7 +32,7 @@ export default {
     },
     transition: {
       type: String,
-      default: 'el-fade-in-linear'
+      default: 'eas-fade-in-linear'
     },
     popperOptions: {
       default() {
@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     tooltipId() {
-      return `el-tooltip-${generateId()}`;
+      return `eas-tooltip-${generateId()}`;
     }
   },
   beforeCreate() {
@@ -91,7 +91,7 @@ export default {
             aria-hidden={ (this.disabled || !this.showPopper) ? 'true' : 'false' }
             v-show={!this.disabled && this.showPopper}
             class={
-              ['el-tooltip__popper', 'is-' + this.effect, this.popperClass]
+              ['eas-tooltip__popper', 'is-' + this.effect, this.popperClass]
             }>
             { this.$slots.content || this.content }
           </div>
@@ -105,7 +105,7 @@ export default {
     if (!vnode) return vnode;
 
     const data = vnode.data = vnode.data || {};
-    data.staticClass = this.concatClass(data.staticClass, 'el-tooltip');
+    data.staticClass = this.concatClass(data.staticClass, 'eas-tooltip');
 
     return vnode;
   },

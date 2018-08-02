@@ -51,7 +51,7 @@
       transform: rotate(90deg);
     }
 
-    > .el-icon {
+    > .eas-icon {
       position: absolute;
       left: 50%;
       top: 50%;
@@ -83,13 +83,13 @@
   }
 
   @include m(scrollable-x) {
-    .el-table__body-wrapper {
+    .eas-table__body-wrapper {
       overflow-x: auto;
     }
   }
 
   @include m(scrollable-y) {
-    .el-table__body-wrapper {
+    .eas-table__body-wrapper {
       overflow-y: auto;
     }
   }
@@ -239,7 +239,7 @@
     padding-left: 10px;
     padding-right: 10px;
 
-    &.el-tooltip {
+    &.eas-tooltip {
       white-space: nowrap;
       min-width: 50px;
     }
@@ -280,7 +280,7 @@
     border-right: none;
     border-bottom: none;
 
-    &.el-loading-parent--relative {
+    &.eas-loading-parent--relative {
       border-color: transparent;
     }
 
@@ -339,9 +339,9 @@
     left: auto;
     right: 0;
 
-    .el-table__fixed-header-wrapper,
-    .el-table__fixed-body-wrapper,
-    .el-table__fixed-footer-wrapper {
+    .eas-table__fixed-header-wrapper,
+    .eas-table__fixed-body-wrapper,
+    .eas-table__fixed-footer-wrapper {
       left: auto;
       right: 0;
     }
@@ -405,33 +405,33 @@
     position: relative;
 
     @include when(scrolling-none) {
-      ~ .el-table__fixed,
-      ~ .el-table__fixed-right {
+      ~ .eas-table__fixed,
+      ~ .eas-table__fixed-right {
         box-shadow: none;
       }
     }
 
     @include when(scrolling-left) {
-      ~ .el-table__fixed {
+      ~ .eas-table__fixed {
         box-shadow: none;
       }
     }
 
     @include when(scrolling-right) {
-      ~ .el-table__fixed-right {
+      ~ .eas-table__fixed-right {
         box-shadow: none;
       }
     }
 
-    .el-table--border {
+    .eas-table--border {
       @include when(scrolling-right) {
-        ~ .el-table__fixed-right {
+        ~ .eas-table__fixed-right {
           border-left: $--table-border;
         }
       }
 
       @include when(scrolling-left) {
-        ~ .el-table__fixed {
+        ~ .eas-table__fixed {
           border-right: $--table-border;
         }
       }
@@ -483,8 +483,8 @@
   }
 
   @include m(striped) {
-    & .el-table__body {
-      & tr.el-table__row--striped {
+    & .eas-table__body {
+      & tr.eas-table__row--striped {
         td {
           background: #FAFAFA;
         }
@@ -498,7 +498,7 @@
 
   @include e(body) {
     tr.hover-row {
-      &, &.el-table__row--striped {
+      &, &.eas-table__row--striped {
         &, &.current-row {
           > td {
             background-color: $--table-current-row-background;
@@ -535,20 +535,20 @@
   }
 
   @include m(enable-row-transition) {
-    .el-table__body td {
+    .eas-table__body td {
       transition: background-color .25s ease;
     }
   }
 
   @include m(enable-row-hover) {
-    .el-table__body tr:hover > td {
+    .eas-table__body tr:hover > td {
       background-color: $--table-row-hover-background;
     }
   }
 
   @include m(fluid-height) {
-    .el-table__fixed,
-    .el-table__fixed-right {
+    .eas-table__fixed,
+    .eas-table__fixed-right {
       bottom: 0;
       overflow: hidden;
     }

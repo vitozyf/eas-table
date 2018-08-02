@@ -1,8 +1,8 @@
 <template>
   <label
-    class="el-checkbox"
+    class="eas-checkbox"
     :class="[
-      border && checkboxSize ? 'el-checkbox--' + checkboxSize : '',
+      border && checkboxSize ? 'eas-checkbox--' + checkboxSize : '',
       { 'is-disabled': isDisabled },
       { 'is-bordered': border },
       { 'is-checked': isChecked }
@@ -12,7 +12,7 @@
     :aria-disabled="isDisabled"
     :id="id"
   >
-    <span class="el-checkbox__input"
+    <span class="eas-checkbox__input"
       :class="{
         'is-disabled': isDisabled,
         'is-checked': isChecked,
@@ -21,10 +21,10 @@
       }"
        aria-checked="mixed"
     >
-      <span class="el-checkbox__inner"></span>
+      <span class="eas-checkbox__inner"></span>
       <input
         v-if="trueLabel || falseLabel"
-        class="el-checkbox__original"
+        class="eas-checkbox__original"
         type="checkbox"
         aria-hidden="true"
         :name="name"
@@ -37,7 +37,7 @@
         @blur="focus = false">
       <input
         v-else
-        class="el-checkbox__original"
+        class="eas-checkbox__original"
         type="checkbox"
         aria-hidden="true"
         :disabled="isDisabled"
@@ -48,7 +48,7 @@
         @focus="focus = true"
         @blur="focus = false">
     </span>
-    <span class="el-checkbox__label" v-if="$slots.default || label">
+    <span class="eas-checkbox__label" v-if="$slots.default || label">
       <slot></slot>
       <template v-if="!$slots.default">{{label}}</template>
     </span>
@@ -58,7 +58,7 @@
   import Emitter from '~mixins/emitter';
 
   export default {
-    name: 'ElCheckbox',
+    name: 'EasCheckbox',
 
     mixins: [Emitter],
 
@@ -71,7 +71,7 @@
       }
     },
 
-    componentName: 'ElCheckbox',
+    componentName: 'EasCheckbox',
 
     data() {
       return {
@@ -101,7 +101,7 @@
               (this.isLimitExceeded = true));
 
             this.isLimitExceeded === false &&
-            this.dispatch('ElCheckboxGroup', 'input', [val]);
+            this.dispatch('EasCheckboxGroup', 'input', [val]);
           } else {
             this.$emit('input', val);
             this.selfModel = val;
@@ -122,7 +122,7 @@
       isGroup() {
         let parent = this.$parent;
         while (parent) {
-          if (parent.$options.componentName !== 'ElCheckboxGroup') {
+          if (parent.$options.componentName !== 'EasCheckboxGroup') {
             parent = parent.$parent;
           } else {
             this._checkboxGroup = parent;
@@ -191,7 +191,7 @@
         this.$emit('change', value, ev);
         this.$nextTick(() => {
           if (this.isGroup) {
-            this.dispatch('ElCheckboxGroup', 'change', [this._checkboxGroup.value]);
+            this.dispatch('EasCheckboxGroup', 'change', [this._checkboxGroup.value]);
           }
         });
       }
