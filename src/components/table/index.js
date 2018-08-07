@@ -10,4 +10,10 @@ EasTable.install = function(Vue) {
   }
 };
 
+/* istanbul ignore if */
+// if (typeof window !== 'undefined' && window.Vue) {
+//   console.log(window.Vue)
+//   window.Vue.use(EasTable);
+// }
+
 export default EasTable;

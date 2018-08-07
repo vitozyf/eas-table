@@ -311,7 +311,9 @@ export default {
     selectOnIndeterminate: {
       type: Boolean,
       default: true
-    }
+    },
+
+    // 扩展
   },
 
   components: {
@@ -451,6 +453,10 @@ export default {
 
     toggleAllSelection() {
       this.store.commit('toggleAllSelection');
+    },
+
+    getSelectionRows () {
+      return this.store.getSelectionRows();
     }
   },
 

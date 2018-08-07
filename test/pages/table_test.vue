@@ -1,15 +1,25 @@
 <template>
+<div>
+  <button @click.stop = "getSelectionRows">获取选中数据</button>
   <eas-table
     :data="tableData"
     :stripe="true"
     :border="true"
-    :highlight-current-row="true">
+    :highlight-current-row="true"
+    effect="light"
+    ref="eastable"
+    @row-click="rowClick"
+    @edit:begin="editBegin"
+    @edit:end="editEnd">
     <eas-table-column
       type="selection"
-      fixed="left">
+      >
     </eas-table-column>
     <eas-table-column
-      type="index">
+      prop="id"
+      label="id"
+      width="50"
+      :is-read-only="true">
     </eas-table-column>
     <eas-table-column
       prop="date"
@@ -21,15 +31,34 @@
       prop="name"
       label="姓名"
       width="180"
-      align="center"
-      class-name="aaa">
+      align="center">
     </eas-table-column>
     <eas-table-column
       prop="address"
       label="地址"
-      :show-overflow-tooltip="true">
+      >
     </eas-table-column>
+    <eas-table-column
+      prop="email"
+      label="email">
+    </eas-table-column>
+    <eas-table-column
+      type="index"
+      label="index"
+      width="50"
+      :is-read-only="true">
+    </eas-table-column>
+    <eas-table-column :is-read-only="true">
+      <template slot-scope="scope">
+        <button>编辑</button>
+        <button>删除</button>
+      </template>
+    </eas-table-column>
+    <div>
+      测试
+    </div>
   </eas-table>
+</div>
 </template>
 
 <script>
@@ -37,24 +66,39 @@ export default{
   data () {
     return {
       tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }
       ]
+    }
+  },
+
+  created () {
+    this.initData()
+  },
+
+  methods: {
+    initData () {
+      let tableData = []
+      for (let index = 0; index < 50; index++) {
+        tableData.push({
+          id: index,
+          date: '2016-05-02',
+          name: `王小虎${index}`,
+          address: '上海市普陀区金沙江路 1518 弄',
+          email: 'vito.zhang@gmail.com'
+        })
+      }
+      this.tableData = tableData
+    },
+    editBegin (row, column, cell, value) {
+      console.log(row, column, cell, value)
+    },
+    editEnd (row, column, cell, value) {
+      console.log(row, column, cell, value)
+    },
+    getSelectionRows () {
+      console.log(this.$refs.eastable.getSelectionRows())
+    },
+    rowClick (row) {
+      // console.log(this.$refs.eastable.store.cleanSelection())
     }
   }
 }

@@ -4,7 +4,7 @@ import EasCheckbox from '~components/checkbox';
 import EasTooltip from '~components/tooltip';
 import debounce from 'throttle-debounce/debounce';
 import LayoutObserver from './layout-observer';
-
+import keycodes from './keycode';
 export default {
   name: 'ElTableBody',
 
@@ -34,7 +34,9 @@ export default {
         class="eas-table__body"
         cellspacing="0"
         cellpadding="0"
-        border="0">
+        border="0"
+        tabindex="0"
+        on-keydown={ ($event) => { this.handlerKeydown($event) } }>
         <colgroup>
           {
             this._l(this.columns, column => <col name={ column.id } />)
@@ -77,7 +79,8 @@ export default {
                                 store: this.store,
                                 _self: this.context || this.table.$vnode.context
                               },
-                              columnsHidden[cellIndex]
+                              columnsHidden[cellIndex],
+                              this.getCellClass($index, cellIndex, row, column)
                             )
                           }
                         </td>
@@ -136,6 +139,10 @@ export default {
       if (newRow) {
         addClass(newRow, 'current-row');
       }
+      this.store.commit('setEditRow', null);
+    },
+    'store.states.currentColumn'(newVal, oldVal) {
+      this.store.commit('setEditColumn', null);
     }
   },
 
@@ -282,9 +289,26 @@ export default {
 
     getCellClass(rowIndex, columnIndex, row, column) {
       const classes = [column.id, column.align, column.className];
+      const currentRow = this.store.states.currentRow
+      const currentColumn = this.store.states.currentColumn
+      const editRow = this.store.states.editRow
+      const editColumn = this.store.states.editColumn
 
       if (this.isColumnHidden(columnIndex)) {
         classes.push('is-hidden');
+      }
+
+      if (currentRow === row && currentColumn.id === column.id) {
+        classes.push('current-cell');
+      }
+      if (
+        editRow === row
+        && editColumn
+        && editColumn.id === column.id
+        && !column.isReadOnly
+        && column.type === 'default'
+      ) {
+        classes.push('eas-edit-cell');
       }
 
       const cellClassName = this.table.cellClassName;
@@ -371,6 +395,65 @@ export default {
       this.handleEvent(event, row, 'click');
     },
 
+    handlerKeydown(event) {
+      // event.preventDefault()
+      event.stopPropagation()
+      event.returnvalue = false
+      // 改变当前单元格
+      this.updateCurrentCell(event);
+      // 进入编辑
+      this.keydowToEdit(event)
+    },
+
+    keydowToEdit (event) {
+      if (keycodes[event.keyCode]) {
+        const currentColumn = this.store.states.currentColumn
+        const currentRow = this.store.states.currentRow
+        if (currentColumn && currentRow) {
+          this.store.commit('setEditRow', currentRow);
+          this.store.commit('setEditColumn', currentColumn);
+          this.editCell(this.$el.querySelector('.current-cell'), keycodes[event.keyCode])
+          this.editHandler(currentRow, currentColumn, this.$el.querySelector('.current-cell'), keycodes[event.keyCode])
+        }
+      }
+    },
+
+    editHandler (row, column, cell, value) {
+      this.store.commit('setEditRow', row);
+      this.store.commit('setEditColumn', column);
+      this.editCell(cell, value)
+    },
+
+    updateCurrentCell (event) {
+      const keyAllow = [9, 13, 37, 38, 39, 40]
+      const data = this.store.states.data || []
+      const columns = this.store.states.columns || []
+      const currentRow = this.store.states.currentRow
+      const currentColumn = this.store.states.currentColumn
+      const currentRowIndex = data.indexOf(currentRow)
+      const currentColumnIndex = columns.indexOf(currentColumn)
+
+      if (keyAllow.indexOf(event.keyCode) > -1) {
+        if (event.keyCode === 38 && currentRowIndex > 0) {
+
+          this.store.commit('setCurrentRow', data[currentRowIndex - 1]);
+
+        } else if ((event.keyCode === 40 || event.keyCode === 13) && currentRowIndex < data.length - 1) {
+
+          this.store.commit('setCurrentRow', data[currentRowIndex + 1]);
+
+        } else if (event.keyCode === 37 && currentColumnIndex > 0) {
+
+          this.store.commit('setCurrentColumn', columns[currentColumnIndex - 1]);
+
+        } else if ((event.keyCode === 39 || event.keyCode === 9) && currentColumnIndex < columns.length - 1) {
+
+          this.store.commit('setCurrentColumn', columns[currentColumnIndex + 1]);
+
+        }
+      }
+    },
+
     handleEvent(event, row, name) {
       const table = this.table;
       const cell = getCell(event);
@@ -378,10 +461,25 @@ export default {
       if (cell) {
         column = getColumnByCell(table, cell);
         if (column) {
+          this.store.commit('setCurrentColumn', column);
           table.$emit(`cell-${name}`, row, column, cell, event);
+          // 单元格编辑
+          if (name === 'dblclick') {
+            this.editHandler(row, column, cell)
+          }
         }
       }
       table.$emit(`row-${name}`, row, event, column);
+    },
+
+    editCell (cell, value) {
+      this.$nextTick(() => {
+        const EditInput = cell.querySelector('input')
+        if (value) {
+          this.store.states.currentRow[this.store.states.currentColumn.property] = value
+        }
+        EditInput && EditInput.select()
+      })
     },
 
     handleExpandClick(row, e) {

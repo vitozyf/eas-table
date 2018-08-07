@@ -106,12 +106,40 @@
   }
 
   th, td {
-    padding: 12px 0;
     min-width: 0;
     box-sizing: border-box;
     text-overflow: ellipsis;
     vertical-align: middle;
     position: relative;
+
+    &.current-cell{
+      .cell{
+        background-color: $--table-current-cell-background;
+        color: $--color-white;
+      }
+      &.eas-edit-cell{
+        .cell{
+          padding: 0;
+          .eas-edit_cell{
+            padding: 12px 5px;
+            width: 100%;
+            border: none;
+            outline: none;
+            line-height: inherit;
+            color: $--color-text-regular;
+            font-size: inherit;
+            box-sizing: border-box;
+          }
+        }
+      }
+    }
+
+    .cell{
+      padding: 12px 5px;
+      outline: none;
+      box-sizing: border-box;
+      position: relative;
+    }
 
     @include when(center) {
       text-align: center;
@@ -224,6 +252,10 @@
       box-sizing: border-box;
     }
 
+    .cell{
+      cursor: context-menu;
+    }
+
     &.gutter {
       width: 0;
     }
@@ -238,7 +270,6 @@
     line-height: 23px;
     padding-left: 10px;
     padding-right: 10px;
-
     &.eas-tooltip {
       white-space: nowrap;
       min-width: 50px;
@@ -389,6 +420,7 @@
   @include e((header, body, footer)) {
     table-layout: fixed;
     border-collapse: separate;
+    outline: none;
   }
 
   @include e((header-wrapper, footer-wrapper)) {

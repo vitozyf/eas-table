@@ -2,6 +2,7 @@ import EasCheckbox from '~components/checkbox';
 import EasTag from '~components/tag';
 import objectAssign from '~utils/merge';
 import { getPropByPath } from '~utils/util';
+import { getCell } from './util';
 
 let columnIdSeed = 1;
 
@@ -107,11 +108,31 @@ const getDefaultColumn = function(type, options) {
   return column;
 };
 
-const DEFAULT_RENDER_CELL = function(h, { row, column, $index }) {
+const DEFAULT_RENDER_CELL = function(h, { row, column, $index }, self, IsEditCell) {
   const property = column.property;
   const value = property && getPropByPath(row, property).v;
   if (column && column.formatter) {
     return column.formatter(row, column, value, $index);
+  }
+  if (IsEditCell && !self.isReadOnly) {
+    return (
+      <input
+        class="eas-edit_cell"
+        value = { value }
+        on-keydown = {event =>
+          {
+            event.stopPropagation();
+          }
+        }
+        on-input = {event => { row[column.property] = event.target.value }}
+        on-focus = {event => {
+          self.table.$emit('edit:begin',Object.assign({}, row), Object.assign({}, column), getCell(event))
+        }}
+        on-blur = {event => {
+          self.table.$emit('edit:end', row, column, getCell(event))
+        }}
+      />
+    )
   }
   return value;
 };
@@ -144,6 +165,7 @@ export default {
       type: String,
       default: 'default'
     },
+    isReadOnly: Boolean,
     label: String,
     className: String,
     labelClassName: String,
@@ -224,6 +246,9 @@ export default {
         parent = parent.$parent;
       }
       return parent;
+    },
+    table() {
+      return this.$parent;
     }
   },
 
@@ -247,6 +272,7 @@ export default {
       id: this.columnId,
       columnKey: this.columnKey,
       label: this.label,
+      isReadOnly: this.isReadOnly,
       className: this.className,
       labelClassName: this.labelClassName,
       property: this.prop || this.property,
@@ -292,7 +318,6 @@ export default {
     }
 
     this.columnConfig = column;
-
     let renderCell = column.renderCell;
     let _self = this;
 
@@ -310,7 +335,7 @@ export default {
       return;
     }
 
-    column.renderCell = function(h, data) {
+    column.renderCell = function(h, data, columnsHidden, cellClass) {
       if (_self.$scopedSlots.default) {
         renderCell = () => _self.$scopedSlots.default(data);
       }
@@ -319,9 +344,18 @@ export default {
         renderCell = DEFAULT_RENDER_CELL;
       }
 
+      const IsEditCell = cellClass.indexOf('eas-edit-cell') > -1
+
       return _self.showOverflowTooltip || _self.showTooltipWhenOverflow
-        ? <div class="cell eas-tooltip" style={ {width: (data.column.realWidth || data.column.width) - 1 + 'px'} }>{ renderCell(h, data) }</div>
-        : <div class="cell">{ renderCell(h, data) }</div>;
+        ? <div
+            class={`cell eas-tooltip`}
+            style={ {width: (data.column.realWidth || data.column.width) - 1 + 'px'} }>
+              { renderCell(h, data, _self, IsEditCell) }
+          </div>
+        : <div
+            class={`cell`}>
+              { renderCell(h, data, _self, IsEditCell) }
+          </div>;
     };
   },
 

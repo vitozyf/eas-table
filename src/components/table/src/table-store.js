@@ -105,6 +105,9 @@ const TableStore = function(table, initialState = {}) {
     reserveSelection: false,
     selectable: null,
     currentRow: null,
+    currentColumn: null,
+    editRow: null,
+    editColumn: null,
     hoverRow: null,
     filters: {},
     expandRows: [],
@@ -327,6 +330,18 @@ TableStore.prototype.mutations = {
     }
   },
 
+  setCurrentColumn(states, column) {
+    states.currentColumn = column;
+  },
+
+  setEditRow(states, row) {
+    states.editRow = row;
+  },
+
+  setEditColumn(states, column) {
+    states.editColumn = column;
+  },
+
   rowSelectedChanged(states, row) {
     const changed = toggleRowSelection(states, row);
     const selection = states.selection;
@@ -409,11 +424,15 @@ TableStore.prototype.updateColumns = function() {
   states.columns = [].concat(fixedLeafColumns).concat(leafColumns).concat(rightFixedLeafColumns);
   states.isComplex = states.fixedColumns.length > 0 || states.rightFixedColumns.length > 0;
 };
-
+// // 是否为当前单元格
+// TableStore.prototype.isCurrentCell = function(row, column) {
+//   return (this.states.currentRow === row) && (this.states.currentColumn === column);
+// };
+// 是否为勾选的行
 TableStore.prototype.isSelected = function(row) {
   return (this.states.selection || []).indexOf(row) > -1;
 };
-
+// 清空所有勾选
 TableStore.prototype.clearSelection = function() {
   const states = this.states;
   states.isAllSelected = false;
@@ -424,6 +443,11 @@ TableStore.prototype.clearSelection = function() {
   if (oldSelection.length > 0) {
     this.table.$emit('selection-change', states.selection ? states.selection.slice() : []);
   }
+};
+// 获取选择的数据
+TableStore.prototype.getSelectionRows = function() {
+  const states = this.states;
+  return states.selection
 };
 
 TableStore.prototype.setExpandRowKeys = function(rowKeys) {
@@ -441,7 +465,7 @@ TableStore.prototype.setExpandRowKeys = function(rowKeys) {
 
   this.states.expandRows = expandRows;
 };
-
+// 切换或设置选择的行
 TableStore.prototype.toggleRowSelection = function(row, selected) {
   const changed = toggleRowSelection(this.states, row, selected);
   if (changed) {
