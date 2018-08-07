@@ -23,7 +23,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   output: {
     path: resolve('dist'),
-    publicPath: '/dist/static/'
+    publicPath: './'
     // filename: 'eas-table.js',
     // library: 'EasTable', // 使用require时的模块名
     // libraryTarget: 'umd',
