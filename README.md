@@ -10,7 +10,7 @@ Vue.use(EasTable)
 注意样式文件需要单独引入。
 
 ## Demo
-[查看实例](https://vitozyf.github.io/eas-table/)
+[查看示例](https://vitozyf.github.io/eas-table/)
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
