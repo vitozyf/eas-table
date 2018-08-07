@@ -126,7 +126,7 @@ const DEFAULT_RENDER_CELL = function(h, { row, column, $index }, self, IsEditCel
         }
         on-input = {event => { row[column.property] = event.target.value }}
         on-focus = {event => {
-          self.table.$emit('edit:begin',Object.assign({}, row), Object.assign({}, column), getCell(event))
+          self.table.$emit('edit:begin',Object.assign({}, row), column, getCell(event))
         }}
         on-blur = {event => {
           self.table.$emit('edit:end', row, column, getCell(event))

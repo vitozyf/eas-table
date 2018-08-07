@@ -36,6 +36,7 @@
     <eas-table-column
       prop="address"
       label="地址"
+      :show-overflow-tooltip="true"
       >
     </eas-table-column>
     <eas-table-column
@@ -88,11 +89,11 @@ export default{
       }
       this.tableData = tableData
     },
-    editBegin (row, column, cell, value) {
-      console.log(row, column, cell, value)
+    editBegin (row, column, cell) {
+      // console.log(row, column, cell)
     },
-    editEnd (row, column, cell, value) {
-      console.log(row, column, cell, value)
+    editEnd (row, column, cell) {
+      // console.log(row, column, cell)
     },
     getSelectionRows () {
       console.log(this.$refs.eastable.getSelectionRows())

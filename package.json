@@ -1,6 +1,6 @@
 {
   "name": "eas-table",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "table for Vue",
   "author": "vito<vito.zhang@gmail.com>",
   "main": "dist/eas-table.js",

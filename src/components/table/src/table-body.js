@@ -36,7 +36,10 @@ export default {
         cellpadding="0"
         border="0"
         tabindex="0"
-        on-keydown={ ($event) => { this.handlerKeydown($event) } }>
+        on-keydown={ ($event) => { this.handlerKeydown($event) } }
+        // on-mousedown={ ($event) => this.handleMousedown($event) }
+        // on-mousemove={ ($event) => this.handleMousemove($event) }
+        >
         <colgroup>
           {
             this._l(this.columns, column => <col name={ column.id } />)
@@ -395,8 +398,16 @@ export default {
       this.handleEvent(event, row, 'click');
     },
 
+    // handleMousedown (event) {
+    //   console.log(event.target)
+    // },
+
+    // handleMousemove (event) {
+    //   // console.log(event.target)
+    // },
+
     handlerKeydown(event) {
-      // event.preventDefault()
+      // 有道词典有毒，开启屏幕取词时双击鼠标会触发ctrl+c
       event.stopPropagation()
       event.returnvalue = false
       // 改变当前单元格

@@ -65,7 +65,9 @@ Vue.use(EasTable)
 | current-change | 当表格的当前行发生变化的时候会触发该事件，如果要高亮当前行，请打开表格的 highlight-current-row 属性 | currentRow, oldCurrentRow |
 | header-dragend | 当拖动表头改变了列的宽度的时候会触发该事件 | newWidth, oldWidth, column, event |
 | expand-change | 当用户对某一行展开或者关闭的时候会触发该事件 | row, expandedRows |
-
+| expand-change | 当用户对某一行展开或者关闭的时候会触发该事件 | row, expandedRows |
+| edit:begin | 单元格编辑前触发该事件 | row, column, cell |
+| edit:end | 单元格编辑完成后触发该事件 | row, column, cell |
 ### Table Methods
 | 方法名 | 说明 | 参数 |
 | ---- | ---- | ---- |
